@@ -7,12 +7,13 @@ import type { Project } from '@/db/schema';
 
 export default async function HomePage() {
   let featuredProjects: Project[] = [];
-  let dbError: string | null = null;
+  let hasDbError = false;
 
   try {
     featuredProjects = await getFeaturedProjects();
   } catch (err: unknown) {
-    dbError = err instanceof Error ? err.message : 'Failed to connect to Neon database.';
+    console.error('[HomePage DB Query Error]:', err);
+    hasDbError = true;
   }
 
   const categories = [
@@ -56,7 +57,7 @@ export default async function HomePage() {
         </div>
 
         {/* Database Notice if DATABASE_URL is missing or failed */}
-        {dbError && <DatabaseNotice error={dbError} />}
+        {hasDbError && <DatabaseNotice />}
 
         {/* Featured Projects Section */}
         <div className="mt-16">
@@ -78,7 +79,7 @@ export default async function HomePage() {
                 <ProjectCard key={project.id} project={project} />
               ))}
             </div>
-          ) : !dbError ? (
+          ) : !hasDbError ? (
             <div className="mt-6 rounded-lg border border-dashed border-neutral-300 p-8 text-center text-sm text-neutral-500 dark:border-neutral-800">
               No featured projects found. Please run the seed script to populate the database.
             </div>

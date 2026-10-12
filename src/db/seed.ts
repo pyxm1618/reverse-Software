@@ -23,7 +23,7 @@ const initialProjects: NewProject[] = [
     summary: 'Dex to Java decompiler with command line and GUI tools for Android APK and DEX file reverse engineering.',
     category: 'Decompiler',
     repositoryUrl: 'https://github.com/skylot/jadx',
-    websiteUrl: 'https://jadx.gui.download/',
+    websiteUrl: null,
     license: 'Apache-2.0',
     featured: true,
   },

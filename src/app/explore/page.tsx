@@ -12,12 +12,13 @@ export const metadata: Metadata = {
 
 export default async function ExplorePage() {
   let projects: Project[] = [];
-  let dbError: string | null = null;
+  let hasDbError = false;
 
   try {
     projects = await getAllProjects();
   } catch (err: unknown) {
-    dbError = err instanceof Error ? err.message : 'Failed to query Neon PostgreSQL database.';
+    console.error('[ExplorePage DB Query Error]:', err);
+    hasDbError = true;
   }
 
   return (
@@ -32,7 +33,7 @@ export default async function ExplorePage() {
           </p>
         </div>
 
-        {dbError && <DatabaseNotice error={dbError} />}
+        {hasDbError && <DatabaseNotice />}
 
         <div className="mt-10">
           {projects.length > 0 ? (
@@ -41,7 +42,7 @@ export default async function ExplorePage() {
                 <ProjectCard key={project.id} project={project} />
               ))}
             </div>
-          ) : !dbError ? (
+          ) : !hasDbError ? (
             <div className="rounded-lg border border-dashed border-neutral-300 p-12 text-center text-sm text-neutral-500 dark:border-neutral-800">
               No projects found in database. Run <code className="font-mono bg-neutral-100 dark:bg-neutral-800 px-1 py-0.5 rounded">npm run db:seed</code> to populate data.
             </div>

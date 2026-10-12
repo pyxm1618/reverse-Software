@@ -36,15 +36,16 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
   const { slug } = await params;
 
   let project: Project | null = null;
-  let dbError: string | null = null;
+  let hasDbError = false;
 
   try {
     project = await getProjectBySlug(slug);
   } catch (err: unknown) {
-    dbError = err instanceof Error ? err.message : 'Failed to query Neon PostgreSQL database.';
+    console.error(`[ProjectDetailPage DB Query Error for ${slug}]:`, err);
+    hasDbError = true;
   }
 
-  if (dbError) {
+  if (hasDbError) {
     return (
       <div className="py-12 sm:py-16">
         <Container>
@@ -56,7 +57,7 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
               &larr; Back to Explore
             </Link>
           </div>
-          <DatabaseNotice error={dbError} />
+          <DatabaseNotice />
         </Container>
       </div>
     );
