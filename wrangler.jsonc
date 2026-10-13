@@ -1,6 +1,16 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "reverse-engineer-anything",
+	"keep_vars": true,
+	"workers_dev": true,
+	"preview_urls": true,
+	"routes": [
+		{
+			"pattern": "www.reverseengineeranything.net",
+			"zone_name": "reverseengineeranything.net",
+			"custom_domain": true
+		}
+	],
 	"main": ".open-next/worker.js",
 	"compatibility_date": "2026-10-12",
 	"compatibility_flags": [
@@ -11,10 +21,20 @@
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
 	},
+	"r2_buckets": [
+		{
+			"binding": "NEXT_INC_CACHE_R2_BUCKET",
+			"bucket_name": "reverse-engineer-anything-opennext-cache"
+		}
+	],
+	"images": {
+		"binding": "IMAGES"
+	},
 	"services": [
 		{
 			"binding": "WORKER_SELF_REFERENCE",
-			"service": "reverse-engineer-anything"
+			"service": "reverse-engineer-anything",
+			"environment": "production"
 		}
 	],
 	"observability": {
