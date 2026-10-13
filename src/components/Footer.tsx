@@ -1,4 +1,5 @@
 import { Container } from './Container';
+import { BrandLogo } from './BrandLogo';
 
 export function Footer() {
   return (
@@ -6,9 +7,7 @@ export function Footer() {
       <Container>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between text-sm text-neutral-600 dark:text-neutral-400">
           <div className="space-y-1">
-            <p className="font-medium text-neutral-900 dark:text-neutral-200">
-              Reverse Engineer Anything
-            </p>
+            <BrandLogo variant="footer" />
             <p className="text-xs text-neutral-500">
               An open directory of software reverse engineering tools and projects.
             </p>
