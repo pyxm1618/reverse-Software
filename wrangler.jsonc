@@ -4,6 +4,7 @@
 	"keep_vars": true,
 	"workers_dev": true,
 	"preview_urls": true,
+	"previews": {},
 	"routes": [
 		{
 			"pattern": "www.reverseengineeranything.net",
