@@ -2,6 +2,9 @@
   "name": "reverse-engineer-anything",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +13,11 @@
     "typecheck": "tsc --noEmit",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/db/migrate.ts",
-    "db:seed": "tsx src/db/seed.ts"
+    "db:seed": "tsx src/db/seed.ts",
+    "postinstall": "node scripts/patch-opennext.mjs",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.2.0",
@@ -20,6 +27,7 @@
     "react-dom": "19.3.0"
   },
   "devDependencies": {
+    "@opennextjs/cloudflare": "^1.20.10",
     "@tailwindcss/turbopack": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -30,6 +38,7 @@
     "eslint-config-next": "16.4.0",
     "tailwindcss": "^4",
     "tsx": "^4.23.15",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.149.0"
   }
 }
